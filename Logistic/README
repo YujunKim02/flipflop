@@ -1,0 +1,5 @@
+1. The files IGD.py, SS.py, RR.py run the corresponding algorithms on the problem described in the main paper. Note that for logistic regression, the data point z=-1 with label y is the same as the data point z=1 with label 1-y. Hence, for ease of implementation, all points have been converted to z=1.
+
+The outputs (experimental convergence rates) are stored in the directory plotdatanew.
+
+2. plot_IGD.py, plot_RR.py and plot_SS.py read the corresponding data from plotdatanew and create the plot pdfs.
