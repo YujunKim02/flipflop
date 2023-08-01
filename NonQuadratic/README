@@ -1,0 +1,7 @@
+1. The files SS.py, RR.py run the algorithms on the mean estimation problem described in the main paper. The file IGD.py runs the IGD algorithm on the corresponding hard instance proposed in Theorem 3, Safran and Shamir (2020). The outputs (experimental convergence rates) are stored in the directory plotdatanew.
+
+2. plot_IGD.py, plot_RR.py and plot_SS.py read the corresponding data from plotdatanew and create the plot pdfs.
+
+
+
+Safran, Itay, and Ohad Shamir. "How good is SGD with random shuffling?." In Conference on Learning Theory, pp. 3250-3284. PMLR, 2020.
