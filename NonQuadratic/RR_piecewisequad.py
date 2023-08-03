@@ -7,9 +7,8 @@ import random
 sF=1.0
 d=100
 n = 800 # should be even
-L = 1
-u = 0.1
-
+L = 100
+u = 1
 points = np.random.normal(0,1/np.sqrt(d),[n,d])
 norms=np.linalg.norm(points,2,1)
 norms=np.expand_dims(norms,1)
@@ -26,7 +25,7 @@ def parallelOptimization(K):
   # RandomState(pid+K)
 
   stepFactor=sF
-  eta = stepFactor * np.log(n*K) / (n*K)
+  eta = stepFactor * np.log(n*K) / (n*K*u)
   e1 = []
   e2 = []
   
@@ -70,7 +69,7 @@ def randomReshuffle_Flipping(eta, n, K):
 
 reps = 10
 K_beg=30 # should be evenA
-K_end=300
+K_end=2000
 x_list=[]
 l1=[];l2=[]
 # pool = multiprocessing.Pool(1)
@@ -79,5 +78,5 @@ results=[]
 for k in K_range:
   results.append(parallelOptimization(k))
 
-f = open('plotdatanew/RR_piecewisequad_u0.1', 'w') # Replace with desired output file name
+f = open('plotdatanew/RR_piecewisequad(L100u1K2000)', 'w') # Replace with desired output file name
 f.write("\n".join([",".join([str(r) for r in res]) for res in results]))

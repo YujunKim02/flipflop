@@ -4,9 +4,11 @@ import numpy as np
 import random
 # import multiprocessing
 
-sF=1.0
+sF=100.0
+print("SF: " + str(sF))
 d=100
 n = 800 # should be even
+nS = 1 #noise scale
 
 points = np.random.normal(0,1/np.sqrt(d),[n,d])
 norms=np.linalg.norm(points,2,1)
@@ -38,34 +40,46 @@ def parallelOptimization(K):
   print(np.median(e1), np.median(e2))
   return [np.median(e1), d1, np.median(e2), d2, K]
 
+def F(x):
+  return sum(np.abs(x)**3)/3 - sum(mean*x)
+
+F_star = F(x_star)
+print("F_star = " + str(F_star))
 
 def randomReshuffle(eta, n, K):
-  x=x_star+np.random.normal(0,1/np.sqrt(d))
+  x=x_star+nS*np.random.normal(0,1/np.sqrt(d))
   # r = np.random.permutation(points)
   # r=np.concatenate((-np.ones(int(n/2)), np.ones(int(n/2))))
   # random.shuffle(r)
+  x_his = []
   for i in range(1, K+1):
     r = np.random.permutation(points)
     for j in range(0, n):
       #x = (1 - eta)*x + eta*r[j] # The gradient step.
       x = x - eta*(np.sign(x)*x*x) + eta*r[j]
-  error = np.linalg.norm(x-x_star)
-  return error**2 
+    x_his.append(x)
+  x_bar = np.mean(x_his, 0)
+  error = F(x_bar)-F_star
+  return error
 
 def randomReshuffle_Flipping(eta, n, K):
-  x=x_star+np.random.normal(0,1/np.sqrt(d))
+  x=x_star+nS*np.random.normal(0,1/np.sqrt(d))
   # r=np.concatenate((-np.ones(int(n/2)), np.ones(int(n/2))))
   # random.shuffle(r)
+  x_his = []
   for i in range(1, int(K/2)+1):
     r = np.random.permutation(points)
     for j in range(0, n):
       # x = (1 - eta)*x + eta*r[j] # The gradient step.
       x = x - eta*(np.sign(x)*x*x) + eta*r[j]
+    x_his.append(x)
     for j in range(0, n):
       # x = (1 - eta)*x + eta*r[n-1-j] # The gradient step.
       x = x - eta*(np.sign(x)*x*x) + eta*r[n-1-j]
-  error = np.linalg.norm(x-x_star)
-  return error**2 
+    x_his.append(x)
+  x_bar = np.mean(x_his, 0)
+  error = F(x_bar)-F_star
+  return error
 
 
 reps = 10

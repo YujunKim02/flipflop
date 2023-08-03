@@ -31,6 +31,7 @@ l2=[x/e2[0] for x in e2] # Error normalization
 
 r1=[(x_list[0]**3)/(x**3) for x in x_list]
 r2=[(x_list[0]**5)/(x**5) for x in x_list]
+r3=[(x_list[0]**(0.5))/(x**(0.5)) for x in x_list]
 
 
 
@@ -39,6 +40,7 @@ plt.plot(x_list, l1, linestyle='solid', label=r'Random Reshuffle')
 plt.plot(x_list, l2, linestyle='solid', label=r'FlipFlop with RR')
 plt.plot(x_list, r1, linestyle='dashed', label=r'$1/K^3$')
 plt.plot(x_list, r2, linestyle='dashed', label=r'$1/K^5$')
+plt.plot(x_list, r3, linestyle='dashed', label=r'$1/K^{0.5}$')
 
 e1_low=list((np.array(e1)-np.array(e1_iqr))/e1[0])
 e1_high=list((np.array(e1)+np.array(e1_iqr))/e1[0])
